@@ -24,7 +24,6 @@ export default function HeroSection() {
         spacing={6}
         textAlign="center"
         zIndex={1}
-        color="white"
       >
         <Heading as="h1" size="2xl">
           Добро пожаловать в Unblocks
