@@ -3,10 +3,25 @@
 import { Box, Flex, Link, Spacer, Heading, Button, Stack, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import ThemeToggleButton from './ThemeToggleButton';
+import AuthModal from '@/components/AuthModal';
+import { useDisclosure } from '@chakra-ui/react';
+
 
 export default function Header() {
   const bg = useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(26, 32, 44, 0.8)');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isRegisterOpen,
+    onOpen: onRegisterOpen,
+    onClose: onRegisterClose,
+  } = useDisclosure();
+
 
   return (
     <Flex
@@ -45,15 +60,18 @@ export default function Header() {
         </Link>
       </Stack>
       <Spacer />
-      <Stack direction='row' spacing={2} align="center">
+      <Stack direction="row" spacing={2} align="center">
         <ThemeToggleButton />
-        <Button sx={{ height: '28px' }} variant='solid' colorScheme='teal'>
+        <Button sx={{ height: '28px' }} variant="solid" colorScheme="teal" onClick={onLoginOpen}>
           Вход
         </Button>
-        <Button sx={{ height: '28px' }} variant='outline' colorScheme='teal'>
+        <Button sx={{ height: '28px' }} variant="outline" colorScheme="teal" onClick={onRegisterOpen}>
           Регистрация
         </Button>
       </Stack>
+      <AuthModal mode="login" isOpen={isLoginOpen} onClose={onLoginClose} />
+      <AuthModal mode="register" isOpen={isRegisterOpen} onClose={onRegisterClose} />
+
     </Flex>
   );
 }
