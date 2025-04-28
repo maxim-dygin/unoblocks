@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex, Link, Spacer, Heading, Button, Stack, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Link, Spacer, Heading, Button, Stack, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import ThemeToggleButton from './ThemeToggleButton';
 import AuthModal from '@/components/AuthModal';
