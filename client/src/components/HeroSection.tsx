@@ -112,7 +112,6 @@ export default function HeroSection() {
       justifyContent="center"
       onMouseMove={handleMouseMove}
     >
-      {/* Фон блоков */}
       <Box
         position="absolute"
         top="50%"
@@ -139,7 +138,6 @@ export default function HeroSection() {
         )}
       </Box>
 
-      {/* Факел */}
       <Box
         ref={torchRef}
         position="absolute"
@@ -153,7 +151,6 @@ export default function HeroSection() {
       />
 
 
-      {/* Контент */}
       <VStack
         spacing={6}
         textAlign="center"
