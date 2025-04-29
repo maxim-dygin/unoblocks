@@ -3,19 +3,17 @@
 import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
-const BLOCKS = [
-  'stone',
-  'coal_ore',
-  'iron_ore',
-  'gold_ore',
-  'diamond_ore',
-  'emerald_ore',
-  'redstone_ore',
-  'coarse_dirt',
-] as const;
-type BlockType = typeof BLOCKS[number];
+type BlockType =
+  | 'stone'
+  | 'coal_ore'
+  | 'iron_ore'
+  | 'gold_ore'
+  | 'diamond_ore'
+  | 'emerald_ore'
+  | 'redstone_ore'
+  | 'coarse_dirt';
 
-const BLOCK_IMAGES: Record<BlockType, string> = {
+const blockImages: Record<BlockType, string> = {
   stone: '/images/blocks/stone.png',
   coal_ore: '/images/blocks/coal_ore.png',
   iron_ore: '/images/blocks/iron_ore.png',
@@ -26,7 +24,7 @@ const BLOCK_IMAGES: Record<BlockType, string> = {
   coarse_dirt: '/images/blocks/coarse_dirt.png',
 };
 
-const BLOCK_WEIGHTS: { block: BlockType; weight: number }[] = [
+const blockWeights: { block: BlockType; weight: number }[] = [
   { block: 'stone', weight: 800 },
   { block: 'coal_ore', weight: 50 },
   { block: 'iron_ore', weight: 50 },
@@ -37,13 +35,12 @@ const BLOCK_WEIGHTS: { block: BlockType; weight: number }[] = [
   { block: 'coarse_dirt', weight: 30 },
 ];
 
-
 function getRandomBlock(): BlockType {
-  const totalWeight = BLOCK_WEIGHTS.reduce((sum, item) => sum + item.weight, 0);
+  const totalWeight = blockWeights.reduce((sum, item) => sum + item.weight, 0);
   const random = Math.random() * totalWeight;
   let cumulative = 0;
 
-  for (const item of BLOCK_WEIGHTS) {
+  for (const item of blockWeights) {
     cumulative += item.weight;
     if (random < cumulative) {
       return item.block;
@@ -52,14 +49,13 @@ function getRandomBlock(): BlockType {
   return 'stone';
 }
 
-
-const GRID_SIZE = 40;
+const gridSize = 40;
 
 function generateGrid(): BlockType[][] {
   const grid: BlockType[][] = [];
-  for (let y = 0; y < GRID_SIZE; y++) {
+  for (let y = 0; y < gridSize; y++) {
     const row: BlockType[] = [];
-    for (let x = 0; x < GRID_SIZE; x++) {
+    for (let x = 0; x < gridSize; x++) {
       let block = getRandomBlock();
 
       if (x > 1 && row[x - 1] === block && row[x - 2] === block) {
@@ -76,14 +72,12 @@ function generateGrid(): BlockType[][] {
   return grid;
 }
 
-
 export default function HeroSection() {
   const [grid, setGrid] = useState<BlockType[][]>([]);
   const torchRef = useRef<HTMLDivElement>(null);
-  const BLOCK_SIZE = 64;
-  const GRID_COLUMNS = 40;
-  const GRID_ROWS = 20;
-
+  const blockSize = 64;
+  const gridColumns = 50;
+  const gridRows = 10;
 
   useEffect(() => {
     setGrid(generateGrid());
@@ -100,7 +94,6 @@ export default function HeroSection() {
     }
   };
 
-
   return (
     <Box
       as="section"
@@ -114,21 +107,20 @@ export default function HeroSection() {
     >
       <Box
         position="absolute"
-        top="50%"
         left="50%"
         transform="translate(-50%, -50%)"
-        width={`${GRID_COLUMNS * BLOCK_SIZE}px`}
-        height={`${GRID_ROWS * BLOCK_SIZE}px`}
+        width={`${gridColumns * blockSize}px`}
+        height={`${gridRows * blockSize}px`}
         display="grid"
-        gridTemplateColumns={`repeat(${GRID_COLUMNS}, ${BLOCK_SIZE}px)`}
-        gridAutoRows={`${BLOCK_SIZE}px`}
+        gridTemplateColumns={`repeat(${gridColumns}, ${blockSize}px)`}
+        gridAutoRows={`${blockSize}px`}
         zIndex={0}
       >
         {grid.flatMap((row, rowIndex) =>
           row.map((block, colIndex) => (
             <Box
               key={`${rowIndex}-${colIndex}`}
-              backgroundImage={`url(${BLOCK_IMAGES[block]})`}
+              backgroundImage={`url(${blockImages[block]})`}
               backgroundSize="cover"
               backgroundPosition="center"
               width="64px"
@@ -149,7 +141,6 @@ export default function HeroSection() {
         pointerEvents="none"
         zIndex={1}
       />
-
 
       <VStack
         spacing={6}

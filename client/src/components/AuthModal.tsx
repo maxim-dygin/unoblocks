@@ -10,7 +10,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Input,
-  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -19,11 +18,19 @@ interface AuthModalProps {
   mode: 'login' | 'register';
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: (email: string, password: string) => void;
 }
 
-export default function AuthModal({ mode, isOpen, onClose }: AuthModalProps) {
+export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModalProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleSubmit = () => {
+    if (!email || !password) return; // можно базовую валидацию
+    onSubmit(email, password);
+    setEmail('');
+    setPassword('');
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -45,16 +52,22 @@ export default function AuthModal({ mode, isOpen, onClose }: AuthModalProps) {
               onChange={(e) => setPassword(e.target.value)}
             />
             {mode === 'register' && (
-              <Input
-                type="password"
-                placeholder="Повторите пароль"
-              />
+              <>
+                <Input
+                  type="password"
+                  placeholder="Повторите пароль"
+                />
+                <Input
+                  type="code"
+                  placeholder="Код приглашения (не обязательно)"
+                />
+              </>
             )}
           </VStack>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="teal" mr={3} onClick={onClose}>
+          <Button colorScheme="teal" mr={3} onClick={handleSubmit}>
             {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
           </Button>
         </ModalFooter>
