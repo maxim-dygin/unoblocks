@@ -12,7 +12,7 @@ export default function RootLayout({
       <body>
         <ChakraProvider>
           <Header />
-          <Box pt="70px" height='100vh'>
+          <Box height='100%'>
             {children}
           </Box>
           <Footer />
