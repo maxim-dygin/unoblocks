@@ -1,22 +1,24 @@
-import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+import ClientProviders from "@/components/providers/ClientProviders";
 import Header from "@/components/Header";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import Footer from "@/components/Footer";
+import { Box } from "@chakra-ui/react";
+
+export const metadata: Metadata = {
+  title: "CRAFTORIA",
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <ChakraProvider>
+        <ClientProviders>
           <Header />
-          <Box height='100%'>
-            {children}
-          </Box>
+          <Box height="100%">{children}</Box>
           <Footer />
-        </ChakraProvider>
+        </ClientProviders>
       </body>
     </html>
   );

@@ -18,17 +18,17 @@ interface AuthModalProps {
   mode: 'login' | 'register';
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (email: string, password: string) => void;
+  onSubmit: (username: string, password: string) => void;
 }
 
 export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModalProps) {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    if (!email || !password) return; // можно базовую валидацию
-    onSubmit(email, password);
-    setEmail('');
+    if (!username || !password) return;
+    onSubmit(username, password);
+    setUsername('');
     setPassword('');
   };
 
@@ -36,14 +36,14 @@ export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModal
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{mode === 'login' ? 'Вход' : 'Регистрация'}</ModalHeader>
+        <ModalHeader>{mode === "login" ? "Вход" : "Регистрация"}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <VStack spacing="4">
             <Input
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <Input
               type="password"
@@ -51,24 +51,24 @@ export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModal
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {mode === 'register' && (
+            {/* {mode === 'register' && (
               <>
                 <Input
                   type="password"
                   placeholder="Повторите пароль"
                 />
-                <Input
+                <InputAdded auth requests
                   type="code"
                   placeholder="Код приглашения (не обязательно)"
                 />
               </>
-            )}
+            )} */}
           </VStack>
         </ModalBody>
 
         <ModalFooter>
           <Button colorScheme="teal" mr={3} onClick={handleSubmit}>
-            {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
+            {mode === "login" ? "Войти" : "Зарегистрироваться"}
           </Button>
         </ModalFooter>
       </ModalContent>
