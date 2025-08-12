@@ -4,8 +4,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import { registerUser, loginUser } from "./api";
-
-// useAuth.ts
 import type { AxiosError } from 'axios';
 
 export function useRegister() {
@@ -21,7 +19,7 @@ export function useRegister() {
     }) => registerUser(username, password),
     onSuccess: (res) => {
       if (res.data?.token) {
-        Cookies.set("access_token", res.data.token, { expires: 7 }); // хранить 7 дней
+        Cookies.set("access_token", res.data.token, { expires: 7 });
       }
       toast({
         title: "Регистрация успешна",

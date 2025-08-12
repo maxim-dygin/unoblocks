@@ -26,7 +26,7 @@ export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModal
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    if (!username || !password) return; // можно базовую валидацию
+    if (!username || !password) return;
     onSubmit(username, password);
     setUsername('');
     setPassword('');
@@ -36,7 +36,7 @@ export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModal
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{mode === 'login' ? 'Вход' : 'Регистрация'}</ModalHeader>
+        <ModalHeader>{mode === "login" ? "Вход" : "Регистрация"}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <VStack spacing="4">
@@ -57,7 +57,7 @@ export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModal
                   type="password"
                   placeholder="Повторите пароль"
                 />
-                <Input
+                <InputAdded auth requests
                   type="code"
                   placeholder="Код приглашения (не обязательно)"
                 />
@@ -68,7 +68,7 @@ export default function AuthModal({ mode, isOpen, onClose, onSubmit }: AuthModal
 
         <ModalFooter>
           <Button colorScheme="teal" mr={3} onClick={handleSubmit}>
-            {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
+            {mode === "login" ? "Войти" : "Зарегистрироваться"}
           </Button>
         </ModalFooter>
       </ModalContent>
