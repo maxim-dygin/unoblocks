@@ -23,6 +23,7 @@ import ThemeToggleButton from './ThemeToggleButton';
 import AuthModal from '@/components/AuthModal';
 import { useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useLogin, useRegister } from '@/lib/useAuth';
 
 export default function Header() {
   const bg = useColorModeValue('rgba(209, 209, 209, 0.8)', 'rgba(26, 32, 44, 0.8)');
@@ -47,31 +48,43 @@ export default function Header() {
     avatarUrl: '',
   });
 
-  const handleLogin = (
-    email: string, 
-    // password: string
-  ) => {
-    setUser({
-      isAuthenticated: true,
-      username: email.split('@')[0] || 'Player',
-      balance: 1250,
-      avatarUrl: 'https://i.pravatar.cc/300',
-    });
-    onLoginClose();
+  const loginMutation = useLogin();
+  const registerMutation = useRegister();
+
+  const handleLogin = (username: string, password: string) => {
+    loginMutation.mutate(
+      { username, password },
+      {
+        onSuccess: () => {
+          setUser({
+            isAuthenticated: true,
+            username,
+            balance: 1250,
+            avatarUrl: "https://i.pravatar.cc/300",
+          });
+          onLoginClose();
+        },
+      }
+    );
   };
 
-  const handleRegister = (
-    email: string, 
-    // password: string
-  ) => {
-    setUser({
-      isAuthenticated: true,
-      username: email.split('@')[0] || 'NewPlayer',
-      balance: 500,
-      avatarUrl: 'https://i.pravatar.cc/301',
-    });
-    onRegisterClose();
+  const handleRegister = (username: string, password: string) => {
+    registerMutation.mutate(
+      { username, password },
+      {
+        onSuccess: () => {
+          setUser({
+            isAuthenticated: true,
+            username,
+            balance: 500,
+            avatarUrl: "https://i.pravatar.cc/301",
+          });
+          onRegisterClose();
+        },
+      }
+    );
   };
+
 
   const handleLogout = () => {
     setUser({
